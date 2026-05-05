@@ -7,20 +7,20 @@ from datetime import datetime
 # --- CONFIGURATION & DATABASE ---
 STORAGE_DIR = 'event_photos'
 DATA_FILE = 'metadata.json'
-ADMIN_PASSWORD = 'business2026'
+ADMIN_PASSWORD = 'Evently.2026@'
 
 if not os.path.exists(STORAGE_DIR):
-    os.makedirs(STORAGE_DIR)[cite: 4]
+    os.makedirs(STORAGE_DIR)
 
 def load_metadata():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'r') as f:
             return json.load(f)
-    return {}[cite: 4]
+    return {}
 
 def save_metadata(data):
     with open(DATA_FILE, 'w') as f:
-        json.dump(data, f)[cite: 4]
+        json.dump(data, f)
 
 # --- UI ENHANCEMENTS (CSS) ---
 st.set_page_config(page_title='EventShare Pro+', layout='wide', page_icon='✨')
@@ -45,13 +45,13 @@ st.markdown('''
         border-radius: 15px;
     }
     </style>
-    ''', unsafe_allow_html=True)[cite: 4]
+    ''', unsafe_allow_html=True)
 
 # --- SIDEBAR & IDENTITY ---
 st.sidebar.title("✨ EventShare Elite")
 user_name = st.sidebar.text_input("Attendee Name:", placeholder="How should we call you?")
 admin_key = st.sidebar.text_input("Staff Access:", type="password")
-is_admin = (admin_key == ADMIN_PASSWORD)[cite: 4]
+is_admin = (admin_key == ADMIN_PASSWORD)
 
 # --- UPLOAD WITH FEEDBACK ---
 if user_name:
@@ -65,7 +65,7 @@ if user_name:
                 with open(os.path.join(STORAGE_DIR, fname), 'wb') as out:
                     out.write(f.getbuffer())
             st.toast(f"Successfully shared {len(files)} photos!", icon='✅') # New Feature: Feedback
-            st.rerun()[cite: 4]
+            st.rerun()
 
 # --- MAIN INTERFACE ---
 st.title("Live Event Gallery")
@@ -81,7 +81,7 @@ else:
     if sort_option == "Most Popular":
         all_photos.sort(key=lambda x: metadata.get(x, {}).get('likes', 0), reverse=True)
     else:
-        all_photos.sort(reverse=True)[cite: 4]
+        all_photos.sort(reverse=True)
 
     cols = st.columns(2)
     for idx, fname in enumerate(all_photos):
@@ -121,4 +121,4 @@ else:
                     if fname in metadata: del metadata[fname]
                     save_metadata(metadata)
                     st.rerun()
-            st.divider()[cite: 4]
+            st.divider()
